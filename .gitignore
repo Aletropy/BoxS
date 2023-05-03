@@ -1,0 +1,8 @@
+# Directories
+
+.vscode/
+bin/
+bin-int/
+
+# Files
+Makefile
