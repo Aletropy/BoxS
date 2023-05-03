@@ -11,6 +11,7 @@ namespace BoxS
         virtual ~OpenGLShader() override;
 
         virtual void Bind() override;
+        virtual void SetMat4(const std::string& name, float* values) override;
 
     private:
         uint32_t CompileShader(uint32_t type, const char* source);

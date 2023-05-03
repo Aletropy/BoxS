@@ -8,9 +8,12 @@
 #include "RendererCommand.h"
 
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace BoxS
 {
+    Ref<Camera> Renderer2D::m_CurrentCamera = nullptr;
+
     static const glm::vec4 QuadVertexPositions[] =
     {
         { -1.0f, -1.0f, 0.0f, 1.0f },
@@ -80,8 +83,9 @@ namespace BoxS
         s_Data.QuadShader = Shader::Create("assets/shaders/Default.vert", "assets/shaders/Default.frag");
     }
 
-    void Renderer2D::Begin()
+    void Renderer2D::Begin(const Ref<Camera>& camera)
     {
+        m_CurrentCamera = camera;
         BeginBatch();
     }
 
@@ -107,7 +111,10 @@ namespace BoxS
         uint32_t dataSize = (uint32_t)((uint8_t*)s_Data.QuadVertexBufferPtr - (uint8_t*)s_Data.QuadVertexBufferBase);
         s_Data.QuadVb->SetData(s_Data.QuadVertexBufferBase, dataSize);
 
+        glm::mat4 viewProj = m_CurrentCamera->GetViewProjectionMatrix();
+
         s_Data.QuadShader->Bind();
+        s_Data.QuadShader->SetMat4("u_ViewProjMatrix", glm::value_ptr(viewProj));
 
         RendererCommand::DrawIndexed(s_Data.QuadVa, s_Data.QuadIndexCount);
     }

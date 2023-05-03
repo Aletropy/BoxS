@@ -7,6 +7,9 @@
 #include "Renderer/Renderer2D.h"
 #include "Renderer/RendererCommand.h"
 
+#include "Camera/Camera.h"
+#include "Camera/OrthographicCamera.h"
+
 #include "Renderer/Buffer/Buffer.h"
 #include "Renderer/Buffer/VertexArray.h"
 #include "Renderer/Buffer/VertexBufferLayout.h"

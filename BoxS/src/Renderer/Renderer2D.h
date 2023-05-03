@@ -2,6 +2,7 @@
 
 #include <stdint.h>
 
+#include "Camera/Camera.h"
 #include <glm/glm.hpp>
 
 namespace BoxS
@@ -14,7 +15,7 @@ namespace BoxS
 
         static void Init();
 
-        static void Begin();
+        static void Begin(const Ref<Camera>& camera);
         static void End();
 
         static void DrawQuad(const glm::vec3& position, const glm::vec3& scale, float rotation, const glm::vec4& color = glm::vec4(1.0f));
@@ -23,5 +24,8 @@ namespace BoxS
         static void NextBatch();
         static void BeginBatch();
         static void Flush();
+
+    private:
+        static Ref<Camera> m_CurrentCamera;
     };
 }

@@ -41,6 +41,12 @@ namespace BoxS
         glUseProgram(m_RendererID);
     }
 
+    void OpenGLShader::SetMat4(const std::string& name, float* values)
+    {
+        int location = glGetUniformLocation(m_RendererID, name.c_str());
+        glUniformMatrix4fv(location, 1, GL_FALSE, values);
+    }
+
     uint32_t OpenGLShader::CompileShader(uint32_t type, const char* source)
     {
         uint32_t id = glCreateShader(type);
