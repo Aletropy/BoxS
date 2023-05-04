@@ -37,7 +37,7 @@ namespace BoxS
 
     struct Renderer3DData
     {
-        const static uint32_t MaxCubes = 1000;
+        const static uint32_t MaxCubes = 10000;
         const static uint32_t MaxVertices = MaxCubes * 8;
         const static uint32_t MaxIndices = MaxCubes * 36;
 
