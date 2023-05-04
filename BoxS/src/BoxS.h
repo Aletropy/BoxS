@@ -5,10 +5,12 @@
 
 #include "Renderer/Renderer.h"
 #include "Renderer/Renderer2D.h"
+#include "Renderer/Renderer3D.h"
 #include "Renderer/RendererCommand.h"
 
 #include "Camera/Camera.h"
 #include "Camera/OrthographicCamera.h"
+#include "Camera/PerspectiveCamera.h"
 
 #include "Renderer/Buffer/Buffer.h"
 #include "Renderer/Buffer/VertexArray.h"

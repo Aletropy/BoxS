@@ -2,12 +2,14 @@
 #include "Renderer.h"
 
 #include <glad/glad.h>
+#include "Renderer2D.h"
+#include "Renderer3D.h"
 
 namespace BoxS
 {
     bool Renderer::m_IsInitialized = false;
 
-    bool Renderer::Init()
+    bool Renderer::Init(InitMode mode)
     {
         if(m_IsInitialized)
         {
@@ -15,14 +17,31 @@ namespace BoxS
             return false;
         }
 
-        if(gladLoadGL())
+        if(!gladLoadGL())
         {
-            Logger::Info("Renderer initialized.");
-            m_IsInitialized = true;
-            return true;
+            Logger::Error("Cannot initialize renderer.");
+            return false;
         }
 
-        Logger::Error("Cannot initialize renderer.");
-        return false;
+        glEnable(GL_DEPTH_TEST);
+
+        glEnable(GL_CULL_FACE);
+        glCullFace(GL_BACK);
+        glFrontFace(GL_CW);
+
+        if(mode == InitMode::Only2D)
+            Renderer2D::Init();
+        else if(mode == InitMode::Only3D)
+            Renderer3D::Init();
+        else
+        {
+            Renderer2D::Init();
+            Renderer3D::Init();
+        }
+
+        Logger::Info("Renderer initialized.");
+        m_IsInitialized = true;
+
+        return true;
     }
 }

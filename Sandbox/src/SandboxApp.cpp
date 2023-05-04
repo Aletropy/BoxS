@@ -2,6 +2,10 @@
 
 #include <GLFW/glfw3.h>
 
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+static float zoomSize = 5.0f;
 int main()
 {
     glfwInit();
@@ -17,21 +21,11 @@ int main()
     glfwSwapInterval(1);
 
     BoxS::Renderer::Init();
-    BoxS::Renderer2D::Init();
 
-    Ref<BoxS::OrthographicCamera> camera = CreateRef<BoxS::OrthographicCamera>(800.0f, 600.0f, 5.0f);
-
-    float x = 0.0f;
 
     while(!glfwWindowShouldClose(window))
     {
-        BoxS::RendererCommand::ClearScreen(0.8f, 0.35f, 0.45f);
-
-        camera->SetPosition({ x, 0.0f, 0.0f });
-
-        BoxS::Renderer2D::Begin(camera);
-        BoxS::Renderer2D::DrawQuad({ 0.0f, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f }, 0.0f);
-        BoxS::Renderer2D::End();
+        BoxS::RendererCommand::ClearScreen(0.3f, 0.3f, 0.3f);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
