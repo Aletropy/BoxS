@@ -9,6 +9,7 @@
 #include <stdint.h>
 
 #include <vector>
+#include <array>
 #include <chrono>
 
 #include "Core/Base.h"

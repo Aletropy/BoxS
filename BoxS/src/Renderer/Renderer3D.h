@@ -3,6 +3,7 @@
 #include <stdint.h>
 
 #include "Camera/Camera.h"
+#include "Mesh/Mesh.h"
 
 #include "Core/Base.h"
 

@@ -26,9 +26,11 @@ namespace BoxS
         IndexBuffer() = default;
         virtual ~IndexBuffer() = default;
 
-        virtual void Bind() = 0;
-        virtual void Unbind() = 0;
+        virtual void Bind() const = 0;
+        virtual void Unbind() const = 0;
 
-        static Ref<IndexBuffer> Create(void* data, uint32_t size);
+        virtual uint32_t GetCount() const = 0;
+
+        static Ref<IndexBuffer> Create(void* data, uint32_t size, uint32_t count);
     };
 }

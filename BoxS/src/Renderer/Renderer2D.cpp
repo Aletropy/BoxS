@@ -6,6 +6,7 @@
 #include "Shader.h"
 
 #include "RendererCommand.h"
+#include "Mesh/Mesh.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -20,12 +21,6 @@ namespace BoxS
         { -1.0f, 1.0f, 0.0f, 1.0f },
         { 1.0f, 1.0f, 0.0f, 1.0f },
         { 1.0f, -1.0f, 0.0f, 1.0f }
-    };
-
-    struct Vertex
-    {
-        glm::vec4 Position;
-        glm::vec4 Color;
     };
 
     struct Renderer2DData
@@ -76,7 +71,7 @@ namespace BoxS
             offset += 4;
         }
 
-        s_Data.QuadIb = IndexBuffer::Create((void*)indices, s_Data.MaxIndices * sizeof(uint32_t));
+        s_Data.QuadIb = IndexBuffer::Create((void*)indices, s_Data.MaxIndices * sizeof(uint32_t), s_Data.MaxIndices);
 
         s_Data.QuadVa->SetIndexBuffer(s_Data.QuadIb);
 

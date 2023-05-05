@@ -15,6 +15,7 @@ namespace BoxS
         virtual void AddVertexBuffer(const Ref<VertexBuffer>& vb, const VertexBufferLayout& layout) = 0;
         virtual void SetIndexBuffer(const Ref<IndexBuffer>& ib) = 0;
 
+
         static Ref<VertexArray> Create();
     };
 }

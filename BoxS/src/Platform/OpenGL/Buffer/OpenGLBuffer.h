@@ -23,13 +23,16 @@ namespace BoxS
     class OpenGLIndexBuffer : public IndexBuffer
     {
     public:
-        OpenGLIndexBuffer(void* data, uint32_t size);
+        OpenGLIndexBuffer(void* data, uint32_t size, uint32_t count);
         virtual ~OpenGLIndexBuffer() override;
 
-        virtual void Bind() override;
-        virtual void Unbind() override;
+        virtual void Bind() const;
+        virtual void Unbind() const;
+
+        virtual uint32_t GetCount() const { return m_Count; };
 
     private:
         uint32_t m_RendererID;
+        uint32_t m_Count;
     };
 }

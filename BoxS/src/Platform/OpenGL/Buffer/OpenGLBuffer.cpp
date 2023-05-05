@@ -49,7 +49,8 @@ namespace BoxS
     //////////////// Index buffer  ///////////////////
     //////////////////////////////////////////////////
 
-    OpenGLIndexBuffer::OpenGLIndexBuffer(void *data, uint32_t size)
+    OpenGLIndexBuffer::OpenGLIndexBuffer(void *data, uint32_t size, uint32_t count)
+        : m_Count(count)
     {
         glGenBuffers(1, &m_RendererID);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
@@ -61,12 +62,12 @@ namespace BoxS
         glDeleteBuffers(1, &m_RendererID);
     }
 
-    void OpenGLIndexBuffer::Bind()
+    void OpenGLIndexBuffer::Bind() const
     {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
     }
 
-    void OpenGLIndexBuffer::Unbind()
+    void OpenGLIndexBuffer::Unbind() const
     {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }

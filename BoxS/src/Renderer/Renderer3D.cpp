@@ -27,14 +27,6 @@ namespace BoxS
         { 1.0f, -1.0f, -1.0f, 1.0f } // 7 Back R-B
     };
 
-    
-
-    struct Vertex
-    {
-        glm::vec4 Position;
-        glm::vec4 Color;
-    };
-
     struct Renderer3DData
     {
         const static uint32_t MaxCubes = 10000;
@@ -73,6 +65,7 @@ namespace BoxS
         uint32_t offset = 0;
         for(uint32_t i = 0; i < s_Data.MaxIndices; i += 36)
         {
+            // Front
             indices[i + 0] = offset + 0;
             indices[i + 1] = offset + 1;
             indices[i + 2] = offset + 2;
@@ -80,6 +73,7 @@ namespace BoxS
             indices[i + 4] = offset + 3;
             indices[i + 5] = offset + 0;
 
+            // Right
             indices[i + 6] = offset + 3;
             indices[i + 7] = offset + 2;
             indices[i + 8] = offset + 6;
@@ -87,13 +81,15 @@ namespace BoxS
             indices[i + 10] = offset + 7;
             indices[i + 11] = offset + 3;
 
-            indices[i + 12] = offset + 4;
-            indices[i + 13] = offset + 5;
-            indices[i + 14] = offset + 6;
-            indices[i + 15] = offset + 6;
-            indices[i + 16] = offset + 7;
-            indices[i + 17] = offset + 4;
+            // Back
+            indices[i + 12] = offset + 7;
+            indices[i + 13] = offset + 6;
+            indices[i + 14] = offset + 5;
+            indices[i + 15] = offset + 5;
+            indices[i + 16] = offset + 4;
+            indices[i + 17] = offset + 7;
 
+            // Left
             indices[i + 18] = offset + 4;
             indices[i + 19] = offset + 5;
             indices[i + 20] = offset + 1;
@@ -101,6 +97,7 @@ namespace BoxS
             indices[i + 22] = offset + 0;
             indices[i + 23] = offset + 4;
 
+            // Top
             indices[i + 24] = offset + 2;
             indices[i + 25] = offset + 1;
             indices[i + 26] = offset + 5;
@@ -108,17 +105,18 @@ namespace BoxS
             indices[i + 28] = offset + 6;
             indices[i + 29] = offset + 2;
 
-            indices[i + 30] = offset + 0;
-            indices[i + 31] = offset + 4;
-            indices[i + 32] = offset + 7;
-            indices[i + 33] = offset + 7;
-            indices[i + 34] = offset + 3;
-            indices[i + 35] = offset + 0;
+            // Bottom
+            indices[i + 30] = offset + 4;
+            indices[i + 31] = offset + 0;
+            indices[i + 32] = offset + 3;
+            indices[i + 33] = offset + 3;
+            indices[i + 34] = offset + 7;
+            indices[i + 35] = offset + 4;
 
             offset += 8;
         }
 
-        s_Data.CubeIb = IndexBuffer::Create((void*)indices, s_Data.MaxIndices * sizeof(uint32_t));
+        s_Data.CubeIb = IndexBuffer::Create((void*)indices, s_Data.MaxIndices * sizeof(uint32_t), s_Data.MaxIndices);
 
         s_Data.CubeVa->SetIndexBuffer(s_Data.CubeIb);
 

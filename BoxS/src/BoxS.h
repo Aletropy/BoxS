@@ -16,4 +16,6 @@
 #include "Renderer/Buffer/VertexArray.h"
 #include "Renderer/Buffer/VertexBufferLayout.h"
 
+#include "Renderer/Mesh/Mesh.h"
+
 #include "Renderer/Shader.h"

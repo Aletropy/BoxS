@@ -21,7 +21,11 @@ namespace BoxS
         glm::vec3 pos = { -m_Position.x, -m_Position.y, m_Position.z };
         glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos);
 
-        m_ViewMatrix = transform;
+        glm::mat4 rotation = glm::rotate(glm::mat4(1.0f), glm::radians(m_Rotation.x), { 1.0f, 0.0f, 0.0f })
+        * glm::rotate(glm::mat4(1.0f), glm::radians(m_Rotation.y), { 0.0f, 1.0f, 0.0f })
+        * glm::rotate(glm::mat4(1.0f), glm::radians(m_Rotation.z), { 0.0f, 0.0f, 1.0f });
+
+        m_ViewMatrix = rotation * transform;
 
         RecalculateViewProjMatrix();
     }

@@ -15,8 +15,8 @@ namespace BoxS
         return CreateRef<OpenGLVertexBuffer>(size);
     }
 
-    Ref<IndexBuffer> IndexBuffer::Create(void* data, uint32_t size)
+    Ref<IndexBuffer> IndexBuffer::Create(void* data, uint32_t size, uint32_t count)
     {
-        return CreateRef<OpenGLIndexBuffer>(data, size);
+        return CreateRef<OpenGLIndexBuffer>(data, size, count);
     }
 }
