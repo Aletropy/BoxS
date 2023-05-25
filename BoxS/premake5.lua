@@ -20,13 +20,21 @@ project "BoxS"
     {
         "src/",
         "%{IncludeDirs.glad}",
+        "%{IncludeDirs.GLFW}",
         "%{IncludeDirs.glm}"
     }
 
     links
     {
-        "glad"
+        "glad",
+        "GLFW"
     }
+    
+    filter "system:linux"
+        links
+        {
+            "X11"
+        }
 
     filter "configurations:Debug"
         defines { "DEBUG" }

@@ -1,7 +1,18 @@
 #pragma once
 
+#include "Core/Application.h"
+#include "Core/EntryPoint.h"
+
 #include "Core/Logger.h"
 #include "Core/Base.h"
+
+#include "Core/KeyCodes.h"
+#include "Core/MouseCodes.h"
+
+#include "Events/Event.h"
+#include "Events/ApplicationEvent.h"
+#include "Events/KeyEvent.h"
+#include "Events/MouseEvent.h"
 
 #include "Renderer/Renderer.h"
 #include "Renderer/Renderer2D.h"
