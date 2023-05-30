@@ -8,14 +8,16 @@ namespace BoxS
 {
     bool LinuxInput::IsKeyPressedImpl(int keycode)
     {
-        auto window = Application::Get().GetWindow();
+        auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
+
         auto state = glfwGetKey(window, keycode);
         return state == GLFW_PRESS || state == GLFW_REPEAT;
     }
 
     bool LinuxInput::IsMouseButtonPressedImpl(int button)
     {
-        auto window = Application::Get().GetWindow();
+        auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
+
         auto state = glfwGetMouseButton(window, button);
         return state == GLFW_PRESS;
     }
@@ -35,7 +37,8 @@ namespace BoxS
 
     std::pair<float, float> LinuxInput::GetMousePositionImpl()
     {
-        auto window = Application::Get().GetWindow();
+        auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
+        
         double xpos, ypos;
         glfwGetCursorPos(window, &xpos, &ypos);
 

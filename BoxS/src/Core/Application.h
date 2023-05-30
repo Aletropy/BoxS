@@ -3,8 +3,11 @@
 #include <stdint.h>
 #include "Events/Event.h"
 #include "Layers/LayerStack.h"
+#include "ImGui/ImGuiLayer.h"
 
-struct GLFWwindow;
+#include "Events/ApplicationEvent.h"
+
+#include "Window.h"
 
 namespace BoxS
 {
@@ -22,15 +25,16 @@ namespace BoxS
 
         inline static Application& Get() { return *s_Instance; }
 
-        inline GLFWwindow* GetWindow() { return m_Window; }
-
-        uint32_t GetWindowWidth() const { return m_Width; }
-        uint32_t GetWindowHeight() const { return m_Height; }
+        inline Window& GetWindow() { return *m_Window; }
 
     private:
-        GLFWwindow* m_Window;
-        uint32_t m_Width, m_Height;
+        bool OnWindowClose(WindowCloseEvent& e);
+
+    private:
+        Window* m_Window;
+        bool m_IsRunning = true;
         LayerStack m_LayerStack;
+        ImGuiLayer* m_ImGuiLayer;
     private:
         static Application* s_Instance;
     };

@@ -1,3 +1,4 @@
+#include "boxspch.h"
 #include "Application.h"
 
 #include "Renderer/Renderer.h"
@@ -6,30 +7,29 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+
 #include "Platform/Linux/LinuxInput.h" //TODO: Remove direct platform to application
+#include "Platform/Linux/LinuxWindow.h"
 
 namespace BoxS
 {
+
+#define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
+
     Application* Application::s_Instance = nullptr;
 
     Input* Input::s_Instance = new LinuxInput(); // TODO: REMOVE THIS FAST
 
     Application::Application(uint32_t width, uint32_t height, const char *title)
-        : m_Width(width), m_Height(height)
     {
         s_Instance = this;
 
-        glfwInit();
+        m_Window = new LinuxWindow({ title, width, height });
 
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-        m_Window = glfwCreateWindow(width, height, title, nullptr, nullptr);
-
-        glfwMakeContextCurrent(m_Window);
-
-        glfwSwapInterval(1);
+        m_Window->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
+    
+        m_ImGuiLayer = new ImGuiLayer();
+        PushOverlay(m_ImGuiLayer);
 
         Renderer::Init();
     }
@@ -53,6 +53,9 @@ namespace BoxS
 
     void Application::OnEvent(Event &event)
     {
+        EventDispatcher dispatcher(event);
+        dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
+
         for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it)
 		{
 			if (event.Handled) 
@@ -61,17 +64,27 @@ namespace BoxS
 		}
     }
 
+    bool Application::OnWindowClose(WindowCloseEvent& e)
+    {
+        m_IsRunning = false;
+        return false;
+    }
+
     void Application::Run()
     {
-        while(!glfwWindowShouldClose(m_Window))
+        while(m_IsRunning)
         {
             RendererCommand::ClearScreen(0.0f, 0.0f, 0.0f);
             
             for(Layer* layer : m_LayerStack)
                 layer->OnUpdate();
 
-            glfwSwapBuffers(m_Window);
-            glfwPollEvents();
+            m_ImGuiLayer->Begin();
+            for(Layer* layer : m_LayerStack)
+                layer->OnImGuiRender();
+            m_ImGuiLayer->End();
+
+            m_Window->OnUpdate();
         }
     }
     

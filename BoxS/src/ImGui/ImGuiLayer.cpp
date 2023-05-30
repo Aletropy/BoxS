@@ -38,7 +38,8 @@ namespace BoxS
         io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
         io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 
-        GLFWwindow* window = Application::Get().GetWindow();
+        Application& app = Application::Get();
+        GLFWwindow* window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
 
         ImGui_ImplGlfw_InitForOpenGL(window, true);
         ImGui_ImplOpenGL3_Init("#version 330");
@@ -51,12 +52,13 @@ namespace BoxS
         ImGui::DestroyContext();
     }
 
-    void ImGuiLayer::OnUpdate()
+    void ImGuiLayer::Begin()
     {
         ImGuiIO& io = ImGui::GetIO();
         Application& app = Application::Get();
+        Window& window = app.GetWindow();
 
-        io.DisplaySize = ImVec2((float)app.GetWindowWidth(), (float)app.GetWindowHeight());
+        io.DisplaySize = ImVec2((float)window.GetWidth(), (float)window.GetHeight());
 
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
@@ -64,10 +66,12 @@ namespace BoxS
 
         float time = (float)glfwGetTime();
         io.DeltaTime = m_Time > 0.0 ? (time -m_Time) : (1.0f / 60.0f);
-        m_Time = time;
+        m_Time = time;        
+    }
 
-        static bool show = true;
-        ImGui::ShowDemoWindow(&show);
+    void ImGuiLayer::End()
+    {
+        ImGuiIO& io = ImGui::GetIO();
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

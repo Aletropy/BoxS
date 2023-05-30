@@ -1,6 +1,7 @@
 #pragma once
 
 #include <BoxS.h>
+#include <glm/glm.hpp>
 
 class GameLayer : public BoxS::Layer
 {
@@ -8,16 +9,20 @@ public:
     GameLayer()
         : BoxS::Layer("GameLayer") {}
 
-    virtual void OnAttach() override;
-    virtual void OnUpdate() override;
+    void OnAttach() override;
+    void OnUpdate() override;
+    void OnImGuiRender() override;
 
 private:
     void OnRender();
 
 private:
-    float xIncrement = -0.05f;
-    float x = 0.0f;
-    float x2Increment = 0.05f;
-    float x2 = 0.0f;
-    Ref<BoxS::OrthographicCamera> m_Camera;
+    glm::vec3 position = { 0.0f, 0.0f, 0.0f };
+    glm::vec3 scale = { 1.0f, 1.0f, 1.0f };
+    glm::vec3 rotation = { 0.0f, 0.0f, 0.0f };
+    glm::vec4 color = { 0.0f, 0.0f, 1.0f, 0.8f };
+
+    bool m_Wireframed = false;
+
+    Ref<BoxS::PerspectiveCamera> m_Camera;
 };

@@ -1,41 +1,41 @@
 #include "GameLayer.h"
 
 #include <glm/glm.hpp>
+#include <imgui.h>
 
 void GameLayer::OnAttach()
 {
-    m_Camera = CreateRef<BoxS::OrthographicCamera>(800.0f, 600.0f, 5.0f);
+    m_Camera = CreateRef<BoxS::PerspectiveCamera>(1600.0f, 900.0f, 70.0f);
+
+    m_Camera->SetPosition({ 0.0f, 0.0f, -10.0f });
 }
 
 void GameLayer::OnUpdate()
 {
-
-    x += xIncrement;
-    x2 += x2Increment;
-
-    if(x < -5.0f || x > 5.0f)
-        xIncrement = -xIncrement;
-
-    if(x2 > 5.0f || x2 < -5.0f)
-        x2Increment = -x2Increment;
-
-    auto[x, y] = BoxS::Input::GetMousePosition();
-
-    BoxS::Logger::Info("Mouse Pos: %d, %d", x, y);
-
     OnRender();
 }
 
-glm::vec4 color1 = { 0.0f, 0.0f, 1.0f, 0.8f };
-glm::vec4 color2 = { 1.0f, 0.0f, 0.0f, 0.8f };
+
+void GameLayer::OnImGuiRender()
+{
+    ImGui::Begin("Square");
+
+    ImGui::ColorEdit4("Color", &color.r);
+    ImGui::DragFloat3("Position", &position.r, 0.2f);
+    ImGui::DragFloat3("Scale", &scale.r, 0.2f);
+    ImGui::DragFloat3("Rotation", &rotation.r, 0.2f);
+    ImGui::Checkbox("Wireframed", &m_Wireframed);
+
+    ImGui::End();
+}
 
 void GameLayer::OnRender()
 {
-    BoxS::Renderer2D::Begin(m_Camera);
 
-    BoxS::Renderer2D::DrawQuad({ x2, 0.0f, 0.0f }, { 1.0f, 1.0f, 1.0f }, 0.0f, color2);
+    BoxS::Renderer3D::Begin(m_Camera);
 
-    BoxS::Renderer2D::DrawQuad({ x, 0.0f, 1.0f }, { 1.0f, 1.0f, 1.0f }, 0.0f, color1);
+    BoxS::RendererCommand::SetWireframed(m_Wireframed);
+    BoxS::Renderer3D::DrawCube(position, scale, rotation, color);
 
-    BoxS::Renderer2D::End();
+    BoxS::Renderer3D::End();
 }

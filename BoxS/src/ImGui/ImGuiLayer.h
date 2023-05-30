@@ -12,7 +12,9 @@ namespace BoxS
 
         void OnAttach();
         void OnDetach();
-        void OnUpdate();
+
+        void Begin();
+        void End();
     private:
         float m_Time = 0;
     };

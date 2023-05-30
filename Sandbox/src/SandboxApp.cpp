@@ -7,10 +7,9 @@ class SandboxApp : public BoxS::Application
 {
 public:
     SandboxApp()
-        : BoxS::Application(800, 600, "Sandbox")
+        : BoxS::Application(1600, 900, "Sandbox")
     {
         PushLayer(new GameLayer());
-        PushOverlay(new BoxS::ImGuiLayer());
     }
 };
 
