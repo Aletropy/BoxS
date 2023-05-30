@@ -10,6 +10,7 @@ public:
         : BoxS::Application(800, 600, "Sandbox")
     {
         PushLayer(new GameLayer());
+        PushOverlay(new BoxS::ImGuiLayer());
     }
 };
 

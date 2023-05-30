@@ -21,12 +21,14 @@ project "BoxS"
         "src/",
         "%{IncludeDirs.glad}",
         "%{IncludeDirs.GLFW}",
-        "%{IncludeDirs.glm}"
+        "%{IncludeDirs.glm}",
+        "%{IncludeDirs.imgui}"
     }
 
     links
     {
         "glad",
+        "imgui",
         "GLFW"
     }
     

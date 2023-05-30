@@ -20,6 +20,10 @@ namespace BoxS
         void PushLayer(Layer* layer);
         void PushOverlay(Layer* overlay);
 
+        inline static Application& Get() { return *s_Instance; }
+
+        inline GLFWwindow* GetWindow() { return m_Window; }
+
         uint32_t GetWindowWidth() const { return m_Width; }
         uint32_t GetWindowHeight() const { return m_Height; }
 
@@ -27,6 +31,8 @@ namespace BoxS
         GLFWwindow* m_Window;
         uint32_t m_Width, m_Height;
         LayerStack m_LayerStack;
+    private:
+        static Application* s_Instance;
     };
 
     Application* CreateApplication();

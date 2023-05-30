@@ -8,6 +8,11 @@
 #include "Core/KeyCodes.h"
 #include "Core/MouseCodes.h"
 
+#include "Core/Input.h"
+
+#include "Layers/Layer.h"
+#include "ImGui/ImGuiLayer.h"
+
 #include "Events/Event.h"
 #include "Events/ApplicationEvent.h"
 #include "Events/KeyEvent.h"

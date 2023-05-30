@@ -6,11 +6,19 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include "Platform/Linux/LinuxInput.h" //TODO: Remove direct platform to application
+
 namespace BoxS
 {
+    Application* Application::s_Instance = nullptr;
+
+    Input* Input::s_Instance = new LinuxInput(); // TODO: REMOVE THIS FAST
+
     Application::Application(uint32_t width, uint32_t height, const char *title)
         : m_Width(width), m_Height(height)
     {
+        s_Instance = this;
+
         glfwInit();
 
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -40,7 +48,7 @@ namespace BoxS
     void Application::PushOverlay(Layer* overlay)
     {
         m_LayerStack.PushOverlay(overlay);
-        overlay->OnDetach();
+        overlay->OnAttach();
     }
 
     void Application::OnEvent(Event &event)

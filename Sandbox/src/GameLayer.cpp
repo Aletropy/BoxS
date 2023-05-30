@@ -19,6 +19,10 @@ void GameLayer::OnUpdate()
     if(x2 > 5.0f || x2 < -5.0f)
         x2Increment = -x2Increment;
 
+    auto[x, y] = BoxS::Input::GetMousePosition();
+
+    BoxS::Logger::Info("Mouse Pos: %d, %d", x, y);
+
     OnRender();
 }
 

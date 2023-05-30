@@ -19,13 +19,15 @@ project "Sandbox"
         "src/",
         "%{IncludeDirs.BoxS}",
         "%{IncludeDirs.glm}",
-        "%{IncludeDirs.GLFW}"
+        "%{IncludeDirs.GLFW}",
+        "%{IncludeDirs.imgui}"
     }
 
     links
     {
         "BoxS",
         "GLFW",
+        "imgui",
         "glad"
     }
     
