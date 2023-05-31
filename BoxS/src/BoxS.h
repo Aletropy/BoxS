@@ -9,6 +9,7 @@
 #include "Core/MouseCodes.h"
 
 #include "Core/Input.h"
+#include "Core/Timestep.h"
 
 #include "Layers/Layer.h"
 #include "ImGui/ImGuiLayer.h"
@@ -30,6 +31,7 @@
 #include "Renderer/Buffer/Buffer.h"
 #include "Renderer/Buffer/VertexArray.h"
 #include "Renderer/Buffer/VertexBufferLayout.h"
+#include "Renderer/Framebuffer.h"
 
 #include "Renderer/Mesh/Mesh.h"
 

@@ -10,6 +10,7 @@ public:
         : BoxS::Application(1600, 900, "Sandbox")
     {
         PushLayer(new GameLayer());
+
     }
 };
 

@@ -55,6 +55,7 @@ namespace BoxS
     {
         EventDispatcher dispatcher(event);
         dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::OnWindowClose));
+        dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(Application::OnWindowResize));
 
         for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it)
 		{
@@ -67,6 +68,21 @@ namespace BoxS
     bool Application::OnWindowClose(WindowCloseEvent& e)
     {
         m_IsRunning = false;
+        return true;
+    }
+
+    bool Application::OnWindowResize(WindowResizeEvent& e)
+    {
+        if(e.GetWidth() == 0 || e.GetHeight() == 0)
+        {
+            m_IsMinimized = true;
+            return false;
+        }
+
+        m_IsMinimized = false;
+
+        Renderer::OnWindowResize(e.GetWidth(), e.GetHeight());
+
         return false;
     }
 
@@ -74,10 +90,17 @@ namespace BoxS
     {
         while(m_IsRunning)
         {
+            float time = (float)glfwGetTime();
+            Timestep timestep = time - m_LastFrameTime;
+            m_LastFrameTime = time;
+
             RendererCommand::ClearScreen(0.0f, 0.0f, 0.0f);
             
-            for(Layer* layer : m_LayerStack)
-                layer->OnUpdate();
+            if(!m_IsMinimized)
+            {
+                for(Layer* layer : m_LayerStack)
+                    layer->OnUpdate(timestep);
+            }
 
             m_ImGuiLayer->Begin();
             for(Layer* layer : m_LayerStack)

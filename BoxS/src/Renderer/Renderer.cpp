@@ -5,6 +5,8 @@
 #include "Renderer2D.h"
 #include "Renderer3D.h"
 
+#include "RendererCommand.h"
+
 namespace BoxS
 {
     bool Renderer::m_IsInitialized = false;
@@ -46,5 +48,10 @@ namespace BoxS
         m_IsInitialized = true;
 
         return true;
+    }
+
+    void Renderer::OnWindowResize(uint32_t width, uint32_t height)
+    {
+        RendererCommand::Viewport((int)width, (int)height);
     }
 }

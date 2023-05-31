@@ -7,6 +7,8 @@
 
 #include "Events/ApplicationEvent.h"
 
+#include "Timestep.h"
+
 #include "Window.h"
 
 namespace BoxS
@@ -29,12 +31,18 @@ namespace BoxS
 
     private:
         bool OnWindowClose(WindowCloseEvent& e);
+        bool OnWindowResize(WindowResizeEvent& e);
 
     private:
         Window* m_Window;
         bool m_IsRunning = true;
+        bool m_IsMinimized = false;
+
         LayerStack m_LayerStack;
         ImGuiLayer* m_ImGuiLayer;
+
+        Timestep m_Timestep;
+        float m_LastFrameTime = 0.0f;
     private:
         static Application* s_Instance;
     };

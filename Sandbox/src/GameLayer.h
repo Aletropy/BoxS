@@ -10,7 +10,8 @@ public:
         : BoxS::Layer("GameLayer") {}
 
     void OnAttach() override;
-    void OnUpdate() override;
+    void OnUpdate(BoxS::Timestep ts) override;
+    void OnEvent(BoxS::Event& event) override;
     void OnImGuiRender() override;
 
 private:
